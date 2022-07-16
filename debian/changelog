@@ -1,0 +1,8 @@
+asdf-vm (2.1) testing; urgency=medium
+
+  * asdf-vm 10.2 for kaisen 2.1
+  * feature asdf autocompletion for bash
+  * feature asdf autocompletion for zsh without oh-my-zsh plugin
+  * Note: Install asdf for the user who has launch the commandline : sudo apt install asdf-vm
+
+ -- Arnaud Cormier - Kaisen <magiknono@kaisen-linux.org>  Thu, 16 Jul 2022 16:31:02 +0100

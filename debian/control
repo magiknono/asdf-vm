@@ -1,0 +1,19 @@
+Source: asdf-vm
+Priority: optional
+Section: devel
+Maintainer: Arnaud Cormier - Magiknono <magiknono@kaisenlinux.org>, Kevin Chevreuil - Kaisen <kaisen@kaisenlinux.org>
+Uploaders: Kevin Chevreuil - Kaisen <kaisen@kaisenlinux.org>
+Standards-Version: 4.6.1
+Build-Depends: debhelper
+Homepage: https://asdf-vm.com/
+Vcs-Git: https://github.com/asdf-vm/asdf.git
+Vcs-Browser: https://github.com/asdf-vm/asdf
+
+#Filesystems metapackage
+Package: asdf-vm
+Architecture: all
+Recommends: git, curl
+Description: Manage multiple runtime versions with a single CLI tool, extendable via plugins.
+  Asdf is a CLI tool that can manage multiple language runtime versions.
+  (Ruby, Node.js, Elixir, Erlang & more) on a per-project basis. 
+  It is like gvm, nvm, rbenv & pyenv (and more) all in one! Simply install your language's plugin.

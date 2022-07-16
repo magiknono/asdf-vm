@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+asdf_userdir="$(getent passwd|grep ${SUDO_USER}|cut -d ":" -f6)"
+
+case $1 in
+	remove|autoremove|purge)
+
+	if [ -d $asdf_userdir/.asdf ]; then
+		rm -Rf $asdf_userdir/.asdf 2> /dev/null
+		# remove asdf autocompletion for bash
+		sed -i '/# ASDF/d' $asdf_userdir/.bashrc 2> /dev/null || true
+		sed -i '/. \$HOME\/.asdf\/asdf.sh/d' $asdf_userdir/.bashrc 2> /dev/null || true
+		sed -i '/. \$HOME\/.asdf\/completions\/asdf.bash/d' $asdf_userdir/.bashrc 2> /dev/null || true
+	fi
+	if [ -f $asdf_userdir/.zshrc ]; then
+	sed -i '/# ASDF/d' $asdf_userdir/.zshrc 2> /dev/null || true
+    sed -i '/. \$HOME\/.asdf\/asdf.sh/d' $asdf_userdir/.zshrc 2> /dev/null || true
+	sed -i '/# append completions to fpath/d' $asdf_userdir/.zshrc 2> /dev/null || true
+	sed -i '/fpath=(${ASDF_DIR}\/completions \$fpath)/d' $asdf_userdir/.zshrc 2> /dev/null || true
+	sed -i '/# initialise completions with ZSH compinit/d' $asdf_userdir/.zshrc 2> /dev/null || true
+	sed -i '/autoload -Uz compinit && compinit/d' $asdf_userdir/.zshrc 2> /dev/null || true
+	fi
+	;;
+esac
+
+echo "Restart your Terminal !"

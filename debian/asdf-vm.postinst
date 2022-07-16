@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+asdf_userdir="$(getent passwd|grep ${SUDO_USER}|cut -d ":" -f6)"
+
+# install asdf folder for the user who launch the sudo apt install asdf-vm
+if [ -d /usr/share/asdf ]; then
+    cp -rp /usr/share/asdf $asdf_userdir/.asdf 2> /dev/null
+else
+    exit 2
+fi
+
+## Autocompletions for asdf, we assume bash by default and zsh optionnal
+
+# install asdf autocompletion for bash
+if [ -f $asdf_userdir/.bashrc ]; then
+    echo '# ASDF' >> $asdf_userdir/.bashrc 
+    echo '. $HOME/.asdf/asdf.sh' >> $asdf_userdir/.bashrc 
+    echo '. $HOME/.asdf/completions/asdf.bash' >> $asdf_userdir/.bashrc
+else
+    exit 2
+fi
+
+# install asdf for zsh autocompletion (not using ohmyzsh plugin !)
+if [ -f $asdf_userdir/.zshrc ]; then
+    echo '# ASDF' >> $asdf_userdir/.zshrc 
+    echo '. $HOME/.asdf/asdf.sh' >> $asdf_userdir/.zshrc 
+    echo '
+# append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+# initialise completions with ZSH compinit
+autoload -Uz compinit && compinit
+' >> $asdf_userdir/.zshrc 
+fi
+
+echo "Restart your Terminal !"
+
